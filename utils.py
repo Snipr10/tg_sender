@@ -97,13 +97,32 @@ def get_result_messages():
     i = 0
     for p in posts:
         i += 1
-        text = f"<b>Источник</b>: {network.get(p.get('network_name'))} \n"
-        text += f"<b>Автор</b>: {p.get('author') or ' '} \n"
-        text += f"<b>Дата создания поста</b>: {p.get('created_date') or ' '} \n"
-        text += f"<b>Лайки</b>: {p.get('likes') or '0'} \n"
-        text += f"<b>Репосты</b>: {p.get('reposts') or '0'} \n"
-        text += f"<b>Комментарии</b>: {p.get('comments') or '0'} \n"
-        text += f"<b>Содержание</b>: {p.get('text') or ' '} \n"
-        text += f"<b>Ссылка</b>: {p.get('uri') or ' '} \n"
-        messages.append(text)
+        text_html = f"<b>Источник</b>: {network.get(p.get('network_name'))} \n"
+        text_html += f"<b>Автор</b>: {p.get('author') or ' '} \n"
+        text_html += f"<b>Дата создания поста</b>: {p.get('created_date') or ' '} \n"
+        text_html += f"<b>Лайки</b>: {p.get('likes') or '0'} \n"
+        text_html += f"<b>Репосты</b>: {p.get('reposts') or '0'} \n"
+        text_html += f"<b>Комментарии</b>: {p.get('comments') or '0'} \n"
+        text_html += f"<b>Содержание</b>: {p.get('text') or ' '} \n"
+        text_html += f"<b>Ссылка</b>: {p.get('uri') or ' '} \n"
+
+        text_mark = f"*Источник*: {network.get(p.get('network_name'))} \n"
+        text_mark += f"*Автор*: {p.get('author') or ' '} \n"
+        text_mark += f"*Дата создания поста*: {p.get('created_date') or ' '} \n"
+        text_mark += f"*Лайки*: {p.get('likes') or '0'} \n"
+        text_mark += f"*Репосты*: {p.get('reposts') or '0'} \n"
+        text_mark += f"*Комментарии*: {p.get('comments') or '0'} \n"
+        text_mark += f"*Содержание*: {p.get('text') or ' '} \n"
+        text_mark += f"*Ссылка*: {p.get('uri') or ' '} \n"
+
+        text_ = f"Источник: {network.get(p.get('network_name'))} \n"
+        text_ += f"Автор: {p.get('author') or ' '} \n"
+        text_ += f"Дата создания поста: {p.get('created_date') or ' '} \n"
+        text_ += f"Лайки: {p.get('likes') or '0'} \n"
+        text_ += f"Репосты: {p.get('reposts') or '0'} \n"
+        text_ += f"Комментарии: {p.get('comments') or '0'} \n"
+        text_ += f"Содержание: {p.get('text') or ' '} \n"
+        text_ += f"Ссылка: {p.get('uri') or ' '} \n"
+
+        messages.append((text_html, text_mark, text_))
     return messages
