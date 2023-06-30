@@ -1,4 +1,5 @@
 import logging
+import re
 import time
 from enum import Enum
 
@@ -8,7 +9,7 @@ import requests
 from datetime import datetime, timedelta
 
 from settings import login, password, auth_url, thread_id, referenceFilter, post_url, UTC, FROM_MINUTES, POSTS_LIMIT
-import glob
+from bs4 import BeautifulSoup
 import os
 
 IDS_PATH = "ids"
@@ -100,6 +101,14 @@ def get_result_messages():
     except Exception:
         pass
     for p in posts:
+        post_text = p.get('text')
+        try:
+            post_text = BeautifulSoup(p.get('text')).get_text()
+        except Exception as e:
+            try:
+                post_text = re.sub(r"<[^>]+>", "", post_text, flags=re.S)
+            except Exception:
+                pass
         i += 1
         text_html = f"<b>Источник</b>: {network.get(p.get('network_name'))} \n"
         text_html += f"<b>Автор</b>: {p.get('author') or ' '} \n"
@@ -107,7 +116,7 @@ def get_result_messages():
         text_html += f"<b>Лайки</b>: {p.get('likes') or '0'} \n"
         text_html += f"<b>Репосты</b>: {p.get('reposts') or '0'} \n"
         text_html += f"<b>Комментарии</b>: {p.get('comments') or '0'} \n"
-        text_html += f"<b>Содержание</b>: {p.get('text') or ' '} \n"
+        text_html += f"<b>Содержание</b>: {post_text} \n"
         text_html += f"<b>Ссылка</b>: {p.get('uri') or ' '} \n"
 
         text_mark = f"*Источник*: {network.get(p.get('network_name'))} \n"
@@ -116,7 +125,7 @@ def get_result_messages():
         text_mark += f"*Лайки*: {p.get('likes') or '0'} \n"
         text_mark += f"*Репосты*: {p.get('reposts') or '0'} \n"
         text_mark += f"*Комментарии*: {p.get('comments') or '0'} \n"
-        text_mark += f"*Содержание*: {p.get('text') or ' '} \n"
+        text_mark += f"*Содержание*: {post_text} \n"
         text_mark += f"*Ссылка*: {p.get('uri') or ' '} \n"
 
         text_ = f"Источник: {network.get(p.get('network_name'))} \n"
@@ -125,7 +134,7 @@ def get_result_messages():
         text_ += f"Лайки: {p.get('likes') or '0'} \n"
         text_ += f"Репосты: {p.get('reposts') or '0'} \n"
         text_ += f"Комментарии: {p.get('comments') or '0'} \n"
-        text_ += f"Содержание: {p.get('text') or ' '} \n"
+        text_ += f"Содержание: {post_text} \n"
         text_ += f"Ссылка: {p.get('uri') or ' '} \n"
 
         messages.append((text_html, text_mark, text_))
