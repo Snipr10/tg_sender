@@ -95,6 +95,10 @@ def get_result_messages():
     posts = get_results()
     messages = []
     i = 0
+    try:
+        posts.sort(key=lambda x: datetime.strptime(x['created_date'], "%Y-%m-%d %H:%M:%S"))
+    except Exception:
+        pass
     for p in posts:
         i += 1
         text_html = f"<b>Источник</b>: {network.get(p.get('network_name'))} \n"
