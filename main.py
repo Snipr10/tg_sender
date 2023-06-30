@@ -64,7 +64,7 @@ def send_message(m, attempt=0):
         send_message(m, attempt + 1)
 
 
-schedule.every(4).minutes.do(send_messages)
+schedule.every(3).minutes.do(send_messages)
 
 
 def start_bot():
