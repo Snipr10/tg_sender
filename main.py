@@ -59,7 +59,9 @@ def start_sending_message():
         time.sleep(60)
 
 
-logging.info(f"start_bot {update_time_zone(datetime.now())}")
+# logging.info(f"start_bot {update_time_zone(datetime.now())}")
+print(f"start_bot {update_time_zone(datetime.now())}")
+
 pool_source = ThreadPoolExecutor(3)
 pool_source.submit(start_sending_message)
 pool_source.submit(start_bot)
