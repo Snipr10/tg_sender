@@ -48,7 +48,7 @@ schedule.every(4).minutes.do(send_messages)
 def start_bot():
     while True:
         try:
-            print("start_bot")
+            logging.info(f"start_bot {datetime.now()}")
             bot.polling(none_stop=True)
         except Exception as e:
             print(e)
