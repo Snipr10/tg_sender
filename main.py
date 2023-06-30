@@ -26,6 +26,7 @@ def send_posts(message):
 
 
 def send_messages():
+    logging.info("start")
     for m in get_result_messages():
         send_message(m)
 
@@ -41,7 +42,7 @@ def send_message(m, attempt=0):
             logging.error(f"unable to send messages {e}")
 
 
-schedule.every(5).minutes.do(send_messages)
+schedule.every(4).minutes.do(send_messages)
 
 
 def start_bot():

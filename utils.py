@@ -39,6 +39,7 @@ def login_func(session=requests.session()):
 
 
 def get_posts(session, from_, to_):
+    logging.info(f"from {from_}")
     response = session.post(post_url, json={
         "thread_id": thread_id,
         "from": from_.strftime("%Y-%m-%d %H:%M:%S"),
