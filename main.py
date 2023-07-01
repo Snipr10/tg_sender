@@ -26,13 +26,19 @@ def send_posts(message):
 
 
 def send_messages():
-    logging.info("start")
-    for m in get_result_messages():
-        if max(len(m[0]), len(m[1]), len(m[2])) > 4000:
-            for x in range(0, len(m), 4000):
-                send_message((m[0][x:x + 4000], m[1][x:x + 4000], m[2][x:x + 4000]))
-        else:
-            send_message(m)
+    try:
+        logging.info("start")
+        for m in get_result_messages():
+            try:
+                if max(len(m[0]), len(m[1]), len(m[2])) > 4000:
+                    for x in range(0, len(m), 4000):
+                        send_message((m[0][x:x + 4000], m[1][x:x + 4000], m[2][x:x + 4000]))
+                else:
+                    send_message(m)
+            except Exception as e:
+                print(f"unable to send message {e}")
+    except Exception as e:
+        print(f"unable to send messages {e}")
 
 
 def send_message(m, attempt=0):
@@ -77,8 +83,11 @@ def start_bot():
 
 def start_sending_message():
     while True:
-        schedule.run_pending()
-        time.sleep(60)
+        try:
+            schedule.run_pending()
+            time.sleep(60)
+        except Exception as e:
+            logging.info(e)
 
 
 # logging.info(f"start_bot {update_time_zone(datetime.now())}")
