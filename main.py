@@ -30,8 +30,9 @@ def send_messages():
         logging.info("start")
         for m in get_result_messages():
             try:
-                if max(len(m[0]), len(m[1]), len(m[2])) > 4000:
-                    for x in range(0, len(m), 4000):
+                # if (len(m[0]), len(m[1]), len(m[2])) > 4000:
+                if len(m[0]) > 4000:
+                    for x in range(0, len(m[0]), 4000):
                         send_message((m[0][x:x + 4000], m[1][x:x + 4000], m[2][x:x + 4000]))
                 else:
                     send_message(m)
